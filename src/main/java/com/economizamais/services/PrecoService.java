@@ -30,7 +30,7 @@ public class PrecoService {
 	}
 	
 	public List<Preco> findByLojaId(Integer id) {
-		return repo.findByLojaId(id);
+		return repo.findByLojaIdAndListaAppIsTrue(id);
 	}
 	
 	public Preco save(Preco preco) {

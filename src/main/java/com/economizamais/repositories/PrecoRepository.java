@@ -11,5 +11,5 @@ import com.economizamais.domain.Preco;
 public interface PrecoRepository extends JpaRepository<Preco, Integer>{
 	List<Preco> findByListaAppIsTrue();
 	
-	List<Preco> findByLojaId(Integer id);
+	List<Preco> findByLojaIdAndListaAppIsTrue(Integer id);
 }
