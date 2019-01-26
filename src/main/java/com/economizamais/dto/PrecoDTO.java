@@ -18,10 +18,11 @@ public class PrecoDTO implements Serializable {
 	private Date validade;
 	private Integer idLoja;
 	private String loja;
+	private String imageLoja;
 	private String estado;
 	private String cidade;
-	private Integer latitude;
-	private Integer longitude;
+	private String latitude;
+	private String longitude;
 		
 	public PrecoDTO(Preco preco) {
 		super();
@@ -37,6 +38,7 @@ public class PrecoDTO implements Serializable {
 		this.validade = preco.getValidade();
 		this.idLoja = preco.getLoja().getEndereco().getId();
 		this.loja = preco.getLoja().getRazaoSocial();
+		this.imageLoja = preco.getLoja().getImage();
 		this.estado = preco.getLoja().getEndereco().getUf();
 		this.cidade = preco.getLoja().getEndereco().getCidade();
 		this.latitude = preco.getLoja().getEndereco().getLatitude();
@@ -122,6 +124,14 @@ public class PrecoDTO implements Serializable {
 	public void setLoja(String loja) {
 		this.loja = loja;
 	}
+	
+	public String getImageLoja() {
+		return imageLoja;
+	}
+
+	public void setImageLoja(String imageLoja) {
+		this.imageLoja = imageLoja;
+	}
 
 	public String getEstado() {
 		return estado;
@@ -139,19 +149,19 @@ public class PrecoDTO implements Serializable {
 		this.cidade = cidade;
 	}
 
-	public Integer getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Integer latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public Integer getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Integer longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 		

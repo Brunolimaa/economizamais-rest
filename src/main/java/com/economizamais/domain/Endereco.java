@@ -30,9 +30,9 @@ public class Endereco implements Serializable {
 	
 	private String cep;
 	
-	private Integer latitude;
+	private String latitude;
 	
-	private Integer longitude;
+	private String longitude;
 	
 	@OneToMany(mappedBy="endereco",  fetch = FetchType.LAZY)
 	@JsonManagedReference
@@ -42,8 +42,8 @@ public class Endereco implements Serializable {
 		
 	}
 
-	public Endereco(Integer id, String endereco, String bairro, String cidade, String uf, String cep, Integer latitude,
-			Integer longitude, List<Loja> lojas) {
+	public Endereco(Integer id, String endereco, String bairro, String cidade, String uf, String cep, String latitude,
+			String longitude, List<Loja> lojas) {
 		super();
 		this.id = id;
 		this.endereco = endereco;
@@ -104,19 +104,19 @@ public class Endereco implements Serializable {
 		this.cep = cep;
 	}
 
-	public Integer getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Integer latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public Integer getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Integer longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 

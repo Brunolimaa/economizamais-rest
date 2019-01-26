@@ -16,8 +16,8 @@ public class LojaDTO {
 	private String cidade;
 	private String uf;
 	private String cep;
-	private Integer latitude;
-	private Integer longitude;
+	private String latitude;
+	private String longitude;
 	
 	public LojaDTO(Loja loja) {
 		this.id = loja.getId();
@@ -108,16 +108,16 @@ public class LojaDTO {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	public Integer getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Integer latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	public Integer getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Integer longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 		
