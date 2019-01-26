@@ -2,6 +2,7 @@ package com.economizamais.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,28 +30,24 @@ public class Produto implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String image;
+	private String marca;
 	private String descricao;
+	private String image;
 	private String detalhe;
-	private Double preco;
 	
-	@ManyToOne
-	@JoinColumn(name="marca_id")
-	private Marca marca;
 	
-	@JsonIgnore
-	@ManyToMany(fetch=FetchType.LAZY,
-			cascade= {
-					CascadeType.PERSIST,
-					CascadeType.MERGE
-			}, mappedBy = "produtos")
-	private Set<Loja> lojas = new HashSet<>();
-		
+	@OneToMany(mappedBy="produto")
+	private List<Preco> precos;
+	
+//	@ManyToOne
+//	@JoinColumn(name="marca_id")
+//	private Marca marca;
+//			
 	public Produto() {
 		
 	}
 		
-	public Produto(Integer id, String nome, String image, String descricao, String detalhe, Marca marca, Double preco) {
+	public Produto(Integer id, String nome, String image, String descricao, String detalhe, Double preco,  String marca, List<Preco> precos) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -57,7 +55,7 @@ public class Produto implements Serializable{
 		this.descricao = descricao;
 		this.detalhe = detalhe;
 		this.marca = marca;
-		this.preco = preco;
+		this.precos = precos;
 	}
 
 	public Integer getId() {
@@ -91,28 +89,20 @@ public class Produto implements Serializable{
 		this.detalhe = detalhe;
 	}
 
-	public Marca getMarca() {
+	public List<Preco> getPrecos() {
+		return precos;
+	}
+
+	public void setPrecos(List<Preco> precos) {
+		this.precos = precos;
+	}
+
+	public String getMarca() {
 		return marca;
 	}
 
-	public void setMarca(Marca marca) {
+	public void setMarca(String marca) {
 		this.marca = marca;
-	}
-
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public Set<Loja> getLojas() {
-		return lojas;
-	}
-
-	public void setLojas(Set<Loja> lojas) {
-		this.lojas = lojas;
 	}	
-	
+		
 }

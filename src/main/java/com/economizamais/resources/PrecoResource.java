@@ -1,8 +1,6 @@
 package com.economizamais.resources;
 
 import java.net.URI;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -17,50 +15,59 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.economizamais.domain.Produto;
-import com.economizamais.dto.ProdutoDTO;
-import com.economizamais.services.ProdutoService;
+import com.economizamais.domain.Preco;
+import com.economizamais.dto.PrecoDTO;
+import com.economizamais.services.PrecoService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/produtos")
-public class ProdutoResource {
+@RequestMapping(value="/precos")
+public class PrecoResource {
 	
 	@Autowired
-	private ProdutoService service;
-	
-//	@RequestMapping(method=RequestMethod.GET)
-//	public ResponseEntity<List<Produto>> buscarTodos() {
-//		List<Produto> list = service.findAll();
-//		return ResponseEntity.ok().body(list);
-//	}
+	private PrecoService service;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ProdutoDTO>> buscarTodos() {
-		List<Produto> list = service.findAll();
-		List<ProdutoDTO> listDto = list.stream().map(x -> new ProdutoDTO(x)).collect(Collectors.toList());
+	public ResponseEntity<List<PrecoDTO>> buscarTodos() {
+		List<Preco> list = service.findAll();
+		List<PrecoDTO> listDto = list.stream().map(x -> new PrecoDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+
+	}
+	
+	@RequestMapping(value="/app", method=RequestMethod.GET)
+	public ResponseEntity<List<PrecoDTO>> buscarTodosApp(){
+		List<Preco> list = service.findAllApp();
+		List<PrecoDTO> listDto = list.stream().map(x -> new PrecoDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> buscarId(@PathVariable Integer id){
-		Produto obj = service.findById(id);
-		ProdutoDTO entityDto = new ProdutoDTO(obj);
+		Preco obj = service.findById(id);
+		PrecoDTO entityDto = new PrecoDTO(obj);
 		return ResponseEntity.ok().body(entityDto);
 	}
 	
+	@RequestMapping(value="/loja/{id}", method=RequestMethod.GET)
+	public ResponseEntity<List<PrecoDTO>> buscarIdLoja(@PathVariable Integer id) {
+		List<Preco> list = service.findByLojaId(id);
+		List<PrecoDTO> listDto = list.stream().map(x -> new PrecoDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> inserir(@RequestBody Produto produto){
-		produto = service.save(produto);
+	public ResponseEntity<Void> inserir(@RequestBody Preco preco){
+		preco = service.save(preco);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(produto.getId()).toUri();
+				.path("/{id}").buildAndExpand(preco.getId()).toUri();
 		return ResponseEntity.created(uri).build();	
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> atualizar(@PathVariable Integer id, @RequestBody Produto produto){
-		produto.setId(id);
-		produto = service.update(produto);
+	public ResponseEntity<Void> atualizar(@PathVariable Integer id, @RequestBody Preco preco){
+		preco.setId(id);
+		preco = service.update(preco);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -69,5 +76,4 @@ public class ProdutoResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
 }

@@ -1,68 +1,66 @@
 package com.economizamais.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Loja implements Serializable {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	private String eslogan;
-	private String telefone;
-	private Integer latitude;
-	private Integer longitude;
-	private String endereco;
-	private String cidade;
-	private String estado;
 	
-	@ManyToMany(fetch=FetchType.LAZY,
-			cascade = {
-					CascadeType.PERSIST,
-					CascadeType.MERGE
-			})
-	@JoinTable(name="loja_produto",
-	joinColumns= {@JoinColumn(name="id_loja")},
-	inverseJoinColumns= {@JoinColumn(name="id_produto")}
-	)
-	private Set<Produto> produtos = new HashSet<>();
+	@Column(name="razao_social")
+	private String razaoSocial;
+
+	private String eslogan;
+
+	private String telefone;
+	
+	private String email;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_endereco")
+	@JsonBackReference
+	private Endereco endereco;
+	
+	private String cnpj;
+	
+	private String image;
+	
+	@OneToMany(mappedBy="loja", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Preco> precos;
 	
 	public Loja() {
 		
 	}
 
-	public Loja(Integer id, String nome, String eslogan, String telefone, Integer latitude, Integer longitude,
-			String endereco, String cidade, String estado, Set<Produto> produtos) {
+	public Loja(Integer id, String razaoSocial, String eslogan, String telefone, String email, Endereco endereco,
+			String cnpj, String image, List<Preco> precos) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.razaoSocial = razaoSocial;
 		this.eslogan = eslogan;
 		this.telefone = telefone;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.email = email;
 		this.endereco = endereco;
-		this.cidade = cidade;
-		this.estado = estado;
-		this.produtos = produtos;
+		this.cnpj = cnpj;
+		this.image = image;
+		this.precos = precos;
 	}
 
 	public Integer getId() {
@@ -73,12 +71,12 @@ public class Loja implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getRazaoSocial() {
+		return razaoSocial;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
 	public String getEslogan() {
@@ -97,51 +95,43 @@ public class Loja implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Integer getLatitude() {
-		return latitude;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setLatitude(Integer latitude) {
-		this.latitude = latitude;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public Integer getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(Integer longitude) {
-		this.longitude = longitude;
-	}
-
-	public Set<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(Set<Produto> produtos) {
-		this.produtos = produtos;
-	}
-
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getImage() {
+		return image;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public List<Preco> getPrecos() {
+		return precos;
+	}
+
+	public void setPrecos(List<Preco> precos) {
+		this.precos = precos;
 	}	
 }

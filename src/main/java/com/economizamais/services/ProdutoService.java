@@ -16,7 +16,7 @@ public class ProdutoService {
 	private ProdutoRepository repo;
 	
 	public List<Produto> findAll(){
-		return repo.findLojas();
+		return repo.findAll();
 	}
 	
 	public Produto findById(Integer id) {

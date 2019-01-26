@@ -16,13 +16,13 @@ public class ProdutoDTO implements Serializable {
 	private String image;
 	private String descricao;
 	private String detalhe;
-	private Double preco;
-	private String marca;
-	private String loja;
-	private String estado;
-	private String cidade;
-	private Integer latitude;
-	private Integer longitude;
+//	private Double preco;
+//	private String marca;
+//	private String loja;
+//	private String estado;
+//	private String cidade;
+//	private Integer latitude;
+//	private Integer longitude;
 
 	public ProdutoDTO() {
 		
@@ -35,16 +35,7 @@ public class ProdutoDTO implements Serializable {
 		this.image = produto.getImage();
 		this.descricao = produto.getDescricao();
 		this.detalhe = produto.getDetalhe();
-		this.preco = produto.getPreco();
-		this.marca = produto.getMarca().getNome();
-		
-		produto.getLojas().forEach((v)->{
-			this.loja = v.getNome();
-			this.estado = v.getEstado();
-			this.cidade = v.getCidade();
-			this.latitude = v.getLatitude();
-			this.longitude = v.getLongitude();
-		});
+//		this.marca = produto.getMarca().getNome();
 	}
 	
 	public Integer getId() {
@@ -85,61 +76,5 @@ public class ProdutoDTO implements Serializable {
 
 	public void setDetalhe(String detalhe) {
 		this.detalhe = detalhe;
-	}
-
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public String getLoja() {
-		return loja;
-	}
-
-	public void setLoja(String loja) {
-		this.loja = loja;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public Integer getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(Integer latitude) {
-		this.latitude = latitude;
-	}
-
-	public Integer getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(Integer longitude) {
-		this.longitude = longitude;
 	}
 }
