@@ -1,10 +1,15 @@
 package com.economizamais.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +19,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.economizamais.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Loja implements Serializable {
@@ -26,11 +33,8 @@ public class Loja implements Serializable {
 	
 	@Column(name="razao_social")
 	private String razaoSocial;
-
 	private String eslogan;
-
 	private String telefone;
-	
 	private String email;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -39,18 +43,24 @@ public class Loja implements Serializable {
 	private Endereco endereco;
 	
 	private String cnpj;
-	
 	private String image;
 	
 	@OneToMany(mappedBy="loja", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Preco> precos;
 	
+	@JsonIgnore
+	private String senha;
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
 	public Loja() {
-		
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Loja(Integer id, String razaoSocial, String eslogan, String telefone, String email, Endereco endereco,
-			String cnpj, String image, List<Preco> precos) {
+			String cnpj, String image, List<Preco> precos, String senha) {
 		super();
 		this.id = id;
 		this.razaoSocial = razaoSocial;
@@ -61,6 +71,8 @@ public class Loja implements Serializable {
 		this.cnpj = cnpj;
 		this.image = image;
 		this.precos = precos;
+		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Integer getId() {
@@ -133,5 +145,21 @@ public class Loja implements Serializable {
 
 	public void setPrecos(List<Preco> precos) {
 		this.precos = precos;
-	}	
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	public Set<Perfil> getPerfis(){
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());		
+	}
 }
