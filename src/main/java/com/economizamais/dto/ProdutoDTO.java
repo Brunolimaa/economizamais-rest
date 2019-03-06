@@ -17,7 +17,7 @@ public class ProdutoDTO implements Serializable {
 	private String descricao;
 	private String detalhe;
 //	private Double preco;
-//	private String marca;
+	private String marca;
 //	private String loja;
 //	private String estado;
 //	private String cidade;
@@ -35,7 +35,7 @@ public class ProdutoDTO implements Serializable {
 		this.image = produto.getImage();
 		this.descricao = produto.getDescricao();
 		this.detalhe = produto.getDetalhe();
-//		this.marca = produto.getMarca().getNome();
+		this.marca = produto.getMarca();
 	}
 	
 	public Integer getId() {
@@ -76,5 +76,13 @@ public class ProdutoDTO implements Serializable {
 
 	public void setDetalhe(String detalhe) {
 		this.detalhe = detalhe;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 }
